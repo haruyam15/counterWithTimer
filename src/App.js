@@ -9,23 +9,11 @@ export default function App() {
   const intervalRef = useRef(null);
   const timeoutRef = useRef(null);
 
-  const handleClick = () => {
-    setCount((prev) => prev + 1);
-  };
-
-  const handleRefresh = () => {
-    clearTimers();
-    setTime(0);
-    setCount(0);
-    setIsTimeout(false);
-    startTimer();
-  };
-
   const startTimer = () => {
-    // 10초 후 타임아웃
+    //10초 setTimeout
     timeoutRef.current = setTimeout(() => setIsTimeout(true), 10000);
 
-    // 1초마다 time 증가
+    //1초 setInterval
     intervalRef.current = setInterval(() => {
       setTime((prev) => prev + 1);
     }, 1000);
@@ -42,15 +30,28 @@ export default function App() {
     }
   };
 
-  //10초 후
+  //시작
   useEffect(() => {
-    startTimer(); // 최초 시작
-    return clearTimers; // 언마운트 시 정리
+    startTimer();
+    return clearTimers;
   }, []);
 
+  //타이머 종료
   useEffect(() => {
     if (isTimeout) clearTimers();
   }, [isTimeout]);
+
+  const handleClick = () => {
+    setCount((prev) => prev + 1);
+  };
+
+  const handleRefresh = () => {
+    clearTimers();
+    setTime(0);
+    setCount(0);
+    setIsTimeout(false);
+    startTimer();
+  };
 
   return (
     <div className="App">
